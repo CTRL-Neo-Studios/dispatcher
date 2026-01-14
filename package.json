@@ -1,6 +1,6 @@
 {
   "name": "dispatcher",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A type-safe, channel-based event dispatcher system for Nuxt with automatic cleanup and flexible event handling.",
   "repository": "https://github.com/CTRL-Neo-Studios/dispatcher",
   "license": "MIT",
