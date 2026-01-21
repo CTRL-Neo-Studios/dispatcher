@@ -31,17 +31,6 @@ export function useEventDispatcher<TEvents extends DispatcherEventMap>(channelKe
 	// Track all listeners added in this component (use string for runtime values)
 	const listeners: Array<{ event:  string, handler:  Function, type: 'typed' | 'wild' }> = []
 
-	// Auto cleanup when component unmounts
-	onUnmounted(() => {
-		listeners.forEach(({ event, handler, type }) => {
-			if (type === 'typed') {
-				emitter.off(event as EventPath, handler as any)
-			} else {
-				wildEmitter. off(event, handler as any)
-			}
-		})
-	})
-
 	return {
 		emit: <K extends EventPath>(
 			event: K,
@@ -105,6 +94,16 @@ export function useEventDispatcher<TEvents extends DispatcherEventMap>(channelKe
 			emitter.all.clear()
 			wildEmitter.all.clear()
 			listeners.length = 0
+		},
+
+		unmount: () => {
+			listeners.forEach(({ event, handler, type }) => {
+				if (type === 'typed') {
+					emitter.off(event as EventPath, handler as any)
+				} else {
+					wildEmitter.off(event, handler as any)
+				}
+			})
 		},
 
 		// Expose the channel key for debugging
