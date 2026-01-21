@@ -14,6 +14,10 @@ export function useCustomEventDispatcher() {
 		dispatch.emit('app.window.newFile')
 	}
 
+	onUnmounted(() => {
+		dispatch.unmount()
+	})
+
 	return {
 		call,
 		newfile,
